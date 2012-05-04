@@ -17,21 +17,21 @@
 #if defined(J4FS_USE_XSR)
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 28))
-#include "./Inc/XsrTypes.h"
-#include "./Inc/STL.h"
+#include <xsr/Inc/XsrTypes.h>
+#include <xsr/Inc/STL.h>
 #else
-#include "../../drivers/txsr/Inc/XsrTypes.h"
-#include "../../drivers/txsr/Inc/STL.h"
+#include <txsr/Inc/XsrTypes.h>
+#include <txsr/Inc/STL.h>
 #endif
 
 #elif defined(J4FS_USE_FSR)
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 28))
-#include "../../fsr/Inc/FSR.h"
-#include "../../fsr/Inc/FSR_STL.h"
+#include <tfsr/Inc/FSR.h>
+#include <tfsr/Inc/FSR_STL.h>
 #else
-#include "../fsr/Inc/FSR.h"
-#include "../fsr/Inc/FSR_STL.h"
+#include <fsr/Inc/FSR.h>
+#include <fsr/Inc/FSR_STL.h>
 #endif
 
 // J4FS for moviNAND merged from ROSSI

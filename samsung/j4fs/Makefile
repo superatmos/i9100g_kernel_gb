@@ -10,8 +10,14 @@ MOD_NAME = j4fs
 ifneq ($(KERNELRELEASE), )
 
 EXTRA_CFLAGS +=  -I$(PRJROOT)/modules/include -I$(KDIR)/drivers/tfsr/Inc -I$(KDIR)/include -I$(KDIR)/include/linux -I$(KDIR)/include/asm -D__KERNEL
+ifdef CONFIG_MACH_OMAP_SAMSUNG
+ifndef CONFIG_SAMSUNG_J4FS_USE_EMMC
+EXTRA_CFLAGS += -I$(srctree)/samsung/rfs_fsr/drivers
+EXTRA_CFLAGS += -I$(srctree)/samsung/rfs_fsr/include
+endif
+endif
 
-obj-m := $(MOD_NAME).o
+obj-$(CONFIG_SAMSUNG_J4FS) := $(MOD_NAME).o
 
 $(MOD_NAME)-y := j4fs_kernel.o llid_kernel.o fsd_common.o
 

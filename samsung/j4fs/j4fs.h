@@ -69,18 +69,18 @@
 /**********************************************************
  * This is porting values
  **********************************************************/
-#define PHYSICAL_PAGE_SIZE		2048		// 4KB
-#define PHYSICAL_BLOCK_SIZE	PHYSICAL_PAGE_SIZE*64		// 256KB
-#define J4FS_PARTITION_ID		21
-#undef J4FS_USE_XSR							// NO XSR
-// J4FS for moviNAND merged from ROSSI
-#undef J4FS_USE_FSR						// FSR
+#define PHYSICAL_PAGE_SIZE		(CONFIG_SAMSUNG_J4FS_PHYSICAL_PAGE_SIZE)
+#define PHYSICAL_BLOCK_SIZE		\
+	(PHYSICAL_PAGE_SIZE * (CONFIG_SAMSUNG_J4FS_PHYSICAL_PAGE_PER_BLOCK))
+#define J4FS_PARTITION_ID		(CONFIG_SAMSUNG_J4FS_PARTITION_ID)
+#if defined CONFIG_SAMSUNG_J4FS_USE_XSR
+#define J4FS_USE_XSR
+#elif defined CONFIG_SAMSUNG_J4FS_USE_FSR
+#define J4FS_USE_FSR
+#elif defined CONFIG_SAMSUNG_J4FS_USE_EMMC
 #define J4FS_USE_MOVI
-
-#if defined(J4FS_USE_MOVI)
-#define J4FS_BLOCK_COUNT	20
-#endif
-// J4FS for moviNAND merged from ROSSI
+#define J4FS_BLOCK_COUNT		(CONFIG_SAMSUNG_J4FS_BLOCK_COUNT)
+#endif /* CONFIG_SAMSUNG_J4FS_USE_XSR/FSR */
 
 /*
  * J4FS Version(J4FS_1.0.0p0_b0)
@@ -95,8 +95,8 @@
 /*
  * file header(j4fs_header) and data block and media status table(j4fs_mst) size
  */
-#define J4FS_BASIC_UNIT_SIZE			2048
-#define J4FS_BASIC_UNIT_SIZE_BITS		11
+#define J4FS_BASIC_UNIT_SIZE			CONFIG_SAMSUNG_J4FS_BASIC_UNIT_SIZE
+#define J4FS_BASIC_UNIT_SIZE_BITS		CONFIG_SAMSUNG_J4FS_BASIC_UNIT_SIZE_BITS
 
 /*
  * File name length

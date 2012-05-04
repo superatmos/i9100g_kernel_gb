@@ -28,3 +28,44 @@ config SAMSUNG_J4FS
 	default n
 	help
 		Say Y to enable Samsung J4FS support.
+
+config SAMSUNG_J4FS_PHYSICAL_PAGE_SIZE
+	int "Physical Page Size of NAND Device"
+	default 4096
+
+config SAMSUNG_J4FS_PHYSICAL_PAGE_PER_BLOCK
+	int "Physical Pages-Per-Block Size"
+	default 64
+
+config SAMSUNG_J4FS_PARTITION_ID
+	int "PARAM Partition ID"
+	default 21
+
+choice
+	prompt "NAND Interface for J4FS"
+	depends on SAMSUNG_J4FS
+	default SAMSUNG_J4FS_USE_FSR
+
+config SAMSUGN_J4FS_USE_XSR
+	bool "J4FS use XSR Interface"
+
+config SAMSUNG_J4FS_USE_FSR
+	bool "J4FS use FSR Interface"
+
+config SAMSUNG_J4FS_USE_EMMC
+	bool "J4FS use eMMC Interface"
+
+endchoice
+
+config SAMSUNG_J4FS_BLOCK_COUNT
+	int "Number of block used for J4FS in eMMC"
+	depends on SAMSUNG_J4FS_USE_EMMC
+	default 20
+
+config SAMSUNG_J4FS_BASIC_UNIT_SIZE
+	int "Basic unit size for j4fs_mst"
+	default 2048
+
+config SAMSUNG_J4FS_BASIC_UNIT_SIZE_BITS
+	int "Basic unit size-bits for j4fs_mst"
+	default 11

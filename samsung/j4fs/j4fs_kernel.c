@@ -22,20 +22,20 @@
 #include <linux/slab.h>
 #include "j4fs.h"
 
-#if defined(J4FS_USE_XSR)
+#if defined(CONFIG_SAMSUNG_J4FS_USE_XSR)
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 28))
-#include "./Inc/XsrTypes.h"
-#include "./Inc/STL.h"
+#include <xsr/Inc/XsrTypes.h>
+#include <xsr/Inc/STL.h>
 #else
-#include "../../drivers/txsr/Inc/XsrTypes.h"
-#include "../../drivers/txsr/Inc/STL.h"
+#include <txsr/Inc/XsrTypes.h>
+#include <txsr/Inc/STL.h>
 #endif
 
-#elif defined(J4FS_USE_FSR)
+#elif defined(CONFIG_SAMSUNG_J4FS_USE_FSR)
 
-#include "../../fsr/Inc/FSR.h"
-#include "../../fsr/Inc/FSR_STL.h"
+#include <tfsr/Inc/FSR.h>
+#include <tfsr/Inc/FSR_STL.h>
 
 // J4FS for moviNAND merged from ROSSI
 #elif defined(J4FS_USE_MOVI)
