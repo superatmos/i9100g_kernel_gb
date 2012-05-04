@@ -133,23 +133,7 @@ void emergency_sync(void)
  */
 int file_fsync(struct file *filp, int datasync)
 {
-	struct inode *inode = filp->f_mapping->host;
-	struct super_block * sb;
-	int ret, err;
-
-	/* sync the inode to buffers */
-	ret = write_inode_now(inode, 0);
-
-	/* sync the superblock to buffers */
-	sb = inode->i_sb;
-	if (sb->s_dirt && sb->s_op->write_super)
-		sb->s_op->write_super(sb);
-
-	/* .. finally sync the buffers to disk */
-	err = sync_blockdev(sb->s_bdev);
-	if (!ret)
-		ret = err;
-	return ret;
+	return 0;
 }
 EXPORT_SYMBOL(file_fsync);
 
@@ -166,28 +150,7 @@ EXPORT_SYMBOL(file_fsync);
  */
 int vfs_fsync_range(struct file *file, loff_t start, loff_t end, int datasync)
 {
-	struct address_space *mapping = file->f_mapping;
-	int err, ret;
-
-	if (!file->f_op || !file->f_op->fsync) {
-		ret = -EINVAL;
-		goto out;
-	}
-
-	ret = filemap_write_and_wait_range(mapping, start, end);
-
-	/*
-	 * We need to protect against concurrent writers, which could cause
-	 * livelocks in fsync_buffers_list().
-	 */
-	mutex_lock(&mapping->host->i_mutex);
-	err = file->f_op->fsync(file, datasync);
-	if (!ret)
-		ret = err;
-	mutex_unlock(&mapping->host->i_mutex);
-
-out:
-	return ret;
+	return 0;
 }
 EXPORT_SYMBOL(vfs_fsync_range);
 
@@ -207,15 +170,7 @@ EXPORT_SYMBOL(vfs_fsync);
 
 static int do_fsync(unsigned int fd, int datasync)
 {
-	struct file *file;
-	int ret = -EBADF;
-
-	file = fget(fd);
-	if (file) {
-		ret = vfs_fsync(file, datasync);
-		fput(file);
-	}
-	return ret;
+	return 0;
 }
 
 SYSCALL_DEFINE1(fsync, unsigned int, fd)
@@ -238,10 +193,7 @@ SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
  */
 int generic_write_sync(struct file *file, loff_t pos, loff_t count)
 {
-	if (!(file->f_flags & O_DSYNC) && !IS_SYNC(file->f_mapping->host))
-		return 0;
-	return vfs_fsync_range(file, pos, pos + count - 1,
-			       (file->f_flags & __O_SYNC) ? 0 : 1);
+	return 0;
 }
 EXPORT_SYMBOL(generic_write_sync);
 
