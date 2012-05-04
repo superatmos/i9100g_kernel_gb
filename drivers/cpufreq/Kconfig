@@ -121,8 +121,41 @@ config CPU_FREQ_DEFAULT_GOV_HOTPLUG
 	  hotplug support by simply loading your cpufreq low-level
 	  hardware driver.  Be aware that not all cpufreq drivers
 	  support the hotplug governor. If unsure have a look at
-	  the help section of the driver. Fallback governor will be the
-	  performance governor.
+	  the help section of the driver. Fallback governor will be the 
+  	  performance governor.
+
+config CPU_FREQ_DEFAULT_GOV_INTERACTIVEX
+	bool "interactiveX"
+	select CPU_FREQ_GOV_INTERACTIVEX
+	help
+	  Use the CPUFreq governor 'interactivex' as default. This allows
+	  you to get a full dynamic cpu frequency capable system by simply
+	  loading your cpufreq low-level hardware driver, using the
+	  'interactivex' governor for latency-sensitive workloads.
+
+
+config CPU_FREQ_DEFAULT_GOV_SMARTASS
+        bool "smartass2"
+  	select CPU_FREQ_GOV_SMARTASS
+        help
+          Use the CPUFreq governor 'smartassV2' as default.
+
+config CPU_FREQ_DEFAULT_GOV_MINMAX
+	bool "minmax"
+	select CPU_FREQ_GOV_MINMAX
+	select CPU_FREQ_GOV_PERFORMANCE
+	help
+	  Use the CPUFreq governor 'minmax' as default. This minimizes the
+	  frequency jumps does by the governor. This is aimed at maximizing
+	  both perfomance and battery life.
+
+config CPU_FREQ_DEFAULT_GOV_LIONHEART
+  bool "lionheart"
+  select CPU_FREQ_GOV_LIONHEART
+  select CPU_FREQ_GOV_PERFORMANCE
+  help
+    Use the CPUFreq governor 'lionheart' as default.
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -180,6 +213,12 @@ config CPU_FREQ_GOV_ONDEMAND
 
 	  If in doubt, say N.
 
+config CPU_FREQ_GOV_SMARTASS
+	 tristate "'smartassV2' cpufreq governor"
+	 depends on CPU_FREQ 
+	 help	 	
+  	   'smartassV2' - a "smart" optimized governor!
+
 config CPU_FREQ_GOV_CONSERVATIVE
 	tristate "'conservative' cpufreq governor"
 	depends on CPU_FREQ
@@ -203,6 +242,25 @@ config CPU_FREQ_GOV_CONSERVATIVE
 
 	  If in doubt, say N.
 
+config CPU_FREQ_GOV_MINMAX
+	tristate "'minmax' cpufreq governor"
+	depends on CPU_FREQ
+	help
+	  'minmax' - this driver tries to minimize the frequency jumps by limiting
+	  the the selected frequencies to either the min or the max frequency of
+	  the policy. The frequency is selected according to the load.
+
+	  If in doubt, say N.
+
+config CPU_FREQ_GOV_LIONHEART
+  tristate "'lionheart' cpufreq governor"
+  depends on CPU_FREQ
+
+config CPU_FREQ_GOV_INTERACTIVEX
+tristate "'interactiveX' cpufreq policy governor"
+  help
+    'interactiveX' - Modified version of interactive with sleep+wake code.
+
 config CPU_FREQ_GOV_HOTPLUG
 	tristate "'hotplug' cpufreq governor"
 	depends on CPU_FREQ && NO_HZ && HOTPLUG_CPU
@@ -222,5 +280,6 @@ config CPU_FREQ_GOV_HOTPLUG
 	  'ondemand' instead.
 
 	  If in doubt, say N.
+
 
 endif	# CPU_FREQ
