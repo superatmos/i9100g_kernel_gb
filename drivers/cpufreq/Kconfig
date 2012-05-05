@@ -134,12 +134,6 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVEX
 	  'interactivex' governor for latency-sensitive workloads.
 
 
-config CPU_FREQ_DEFAULT_GOV_SMARTASS
-        bool "smartass2"
-  	select CPU_FREQ_GOV_SMARTASS
-        help
-          Use the CPUFreq governor 'smartassV2' as default.
-
 config CPU_FREQ_DEFAULT_GOV_MINMAX
 	bool "minmax"
 	select CPU_FREQ_GOV_MINMAX
@@ -212,12 +206,6 @@ config CPU_FREQ_GOV_ONDEMAND
 	  For details, take a look at linux/Documentation/cpu-freq.
 
 	  If in doubt, say N.
-
-config CPU_FREQ_GOV_SMARTASS
-	 tristate "'smartassV2' cpufreq governor"
-	 depends on CPU_FREQ 
-	 help	 	
-  	   'smartassV2' - a "smart" optimized governor!
 
 config CPU_FREQ_GOV_CONSERVATIVE
 	tristate "'conservative' cpufreq governor"
